@@ -1,48 +1,52 @@
 import NextLink from "next/link";
 import { PostCard } from "@/components/blog/PostCard";
-import { Post } from "@/types/blog"; // Adjust the import path as necessary
-import { Star, TrendingUp } from "lucide-react";
+import { Post } from "@/types/blog";
+import { Star, ArrowRight } from "lucide-react";
 
 interface FeaturedPostsProps {
   posts: Post[];
 }
-
 export const FeaturedPosts = ({ posts }: FeaturedPostsProps) => {
   return (
-    <section id="featured-posts" className="mb-20">
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-10">
-        <div className="flex items-center gap-3">
-          <div className="p-2 bg-gradient-to-r from-violet-600 to-purple-600 rounded-lg">
-            <Star className="w-6 h-6 text-white" />
-          </div>
-          <div>
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-800 dark:text-white">
-              Featured Articles
+    <section id="featured-posts" className="py-16">
+      <div className="container mx-auto px-4">
+        {/* Header section */}
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-12">
+          <div className="space-y-2">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-gradient-to-r from-violet-600 to-purple-600 rounded-lg">
+                <Star className="w-5 h-5 text-white" />
+              </div>
+              <span className="text-sm font-medium text-violet-600 dark:text-violet-400">
+                FEATURED CONTENT
+              </span>
+            </div>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">
+              Discover Our Best Articles
             </h2>
-            <p className="text-gray-600 dark:text-gray-400 mt-1">
-              Handpicked content just for you
-            </p>
           </div>
+
+          <NextLink
+            href="/blog"
+            className="flex items-center gap-1 text-violet-600 dark:text-violet-400 hover:text-violet-800 dark:hover:text-violet-300 font-medium transition-colors"
+          >
+            View all articles
+            <ArrowRight className="w-4 h-4 mt-0.5" />
+          </NextLink>
         </div>
 
-        <NextLink
-          href="/blog"
-          className="group px-6 py-3 rounded-xl bg-gradient-to-r from-violet-50 to-purple-50 dark:from-violet-900/30 dark:to-purple-900/30 text-violet-700 dark:text-violet-300 hover:from-violet-100 hover:to-purple-100 dark:hover:from-violet-900/50 dark:hover:to-purple-900/50 transition-all duration-300 font-medium flex items-center gap-2"
-        >
-          View All
-          <TrendingUp className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-        </NextLink>
-      </div>
-
-      <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-        {posts.map((post, index) => (
-          <div
-            key={index}
-            className="group transform hover:-translate-y-2 transition-all duration-300"
-          >
-            <PostCard {...post} featured />
-          </div>
-        ))}
+        {/* Posts grid - điều chỉnh grid layout cho 6 bài viết */}
+        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+          {posts.map((post) => (
+            <div
+              key={post.slug}
+              className="group relative overflow-hidden rounded-xl"
+            >
+              <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10" />
+              <PostCard post={post} />
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );

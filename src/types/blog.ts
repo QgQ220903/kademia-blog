@@ -15,11 +15,5 @@ export interface Post {
 export interface Category {
   name: string;
   count: number;
-  slug?: string;
-}
-
-export interface PopularPost {
-  title: string;
-  views: string;
-  slug?: string;
+  slug: string; // Đảm bảo slug luôn là string
 }
